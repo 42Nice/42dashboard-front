@@ -1,6 +1,9 @@
 <template>
-    <div class="h-[70px] bg-dark-background grid grid-flow-col justify-center">
-        <TramVue class="mx-16" v-for="tram in trams" :name="tram.name" :color="tram.color" :line="tram.line" :direction="tram.direction" :parsedeta="tram.parsedeta.toString()" :realtime="tram.realtime == 1" />
+    <div class="h-[70px] bg-dark-background grid grid-flow-col justify-center relative" :key="updateList">
+        <TramVue class="mx-16" v-for="(tram, i) in trams" :key="i" :color="tram.color" :line="tram.line" :direction="tram.direction" :eta="tram.eta" :eta_hour="tram.eta_hour" :realtime="tram.realtime == 1" />
+        <div class="absolute bottom-0 left-0">
+            <p class="text-white font text-[14px] mx-2 p-4">bêta 0.2</p>
+        </div>
     </div>
 </template>
 
@@ -11,38 +14,35 @@ import TramVue from './Tram.vue';
 <script lang="ts">
 import { ref, Ref } from 'vue';
 
-let lastFetch = new Date(1970, 1, 1);
 let trams: Ref<any> = ref([]);
+let updateList: Ref<number> = ref(0);
+
+let updateData = function() {            
+    console.log("Fetching new data for trams (at " + new Date().toLocaleTimeString() + ")");
+    fetch('https://prod.middleware.42dashboard.zenekhan.tech/tram', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        trams.value = data.data;
+        console.log(trams.value);
+        updateList.value++;
+    });
+}
+
+updateData();
+setInterval(updateData, 25000);
 
 export default {
     name: "FooterVue",
     data() {
         return {
-            trams: trams
+            trams: trams,
+            updateList: updateList,
         }
-    },
-    methods: {
-        updateData() {
-            if ((new Date().getTime() - lastFetch.getTime()) <= 60000)
-                return;
-            
-            console.log("Fetching new data for trams");
-            lastFetch = new Date();
-            fetch('https://prod.middleware.42dashboard.zenekhan.tech/tram', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                trams.value = data.data[0].concat(data.data[1]);
-            });
-        },
-    },
-    mounted() {
-        this.updateData();
-        setInterval(this.updateData, 1000); 
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <div class="h-[80px] bg-dark-background flex">
         <!-- 42 Logo -->
         <div class="bg-background z-10">
-            <img src="../assets/42-logo.svg" alt="42 logo" class="w-[80px] h-full mx-4">
+            <img src="/assets/42-logo.svg" alt="42 logo" class="w-[80px] h-full mx-4">
         </div>
 
         <!-- Annonce text -->
@@ -24,6 +24,31 @@ const hour = ref('');
 const msg = ref('');
 let lastFetch = new Date(1970, 1, 1);
 
+let updateData = function () {
+    let today = new Date();
+    let h = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0');
+    hour.value = h;
+
+    if ((today.getTime() - lastFetch.getTime()) <= 60000)
+        return;
+
+    console.log("Fetching new data");
+    lastFetch = today;
+    fetch('https://prod.middleware.42dashboard.zenekhan.tech/message', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        msg.value = "     " + data.data + "     ";
+    });
+}
+
+updateData();
+setInterval(updateData, 1000);
+
 export default {
     name: "HeaderVue",
     data() {
@@ -31,33 +56,6 @@ export default {
             hour: hour,
             msg: msg
         }
-    },
-    methods: {
-        updateData() {
-            let today = new Date();
-            let h = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0');
-            hour.value = h;
-            
-            if ((today.getTime() - lastFetch.getTime()) <= 60000)
-                return;
-            
-            console.log("Fetching new data");
-            lastFetch = today;
-            fetch('https://prod.middleware.42dashboard.zenekhan.tech/message', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                msg.value = "     " + data.data + "     ";
-            });
-        },
-    },
-    mounted() {
-        this.updateData();
-        setInterval(this.updateData, 1000); 
     }
 }
 </script>
