@@ -43,6 +43,10 @@ let updateData = function () {
             if (data.data == null)
                 return;
             events.value = data.data;
+            if (events.value[0].length > 5)
+                events.value[0] = events.value[0].slice(0, 5);
+            if (events.value[1].length > 5)
+                events.value[1] = events.value[1].slice(0, 5);
         });
 }
 
