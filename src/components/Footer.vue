@@ -1,9 +1,12 @@
 
 <template>
+    <div class="grid grid-flow-col justify-center gap-20 mb-16">
+        <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
+    </div>
     <div class="h-[70px] bg-dark-background grid grid-flow-col justify-center relative" :key="updateList">
         <TramVue class="mx-16" v-for="(tram, i) in trams" :key="i" :color="tram.color" :line="tram.line" :direction="tram.direction" :eta="tram.eta" :eta_hour="tram.eta_hour" :realtime="tram.realtime == 1" />
         <div class="absolute bottom-0 left-0">
-            <p class="text-white font text-[8px] mx-2 p-4">bêta {{version}}</p>
+            <p class="text-white font text-[8px] mx-2 p-4">preview {{version}}</p>
         </div>
     </div>
 </template>
@@ -11,15 +14,15 @@
 <script setup lang="ts">
 import {version} from '../../package.json';
 import TramVue from './Tram.vue';
+import Cluster from './Cluster.vue';
 </script>
 
 <script lang="ts">
-import { ref, Ref } from 'vue';
+import { capitalize, ref, Ref } from 'vue';
 
 let trams: Ref<any> = ref([]);
+let clusters: Ref<any> = ref([]);
 let updateList: Ref<number> = ref(0);
-
-
 
 let updateData = function() {            
     console.log("Fetching new data for trams (at " + new Date().toLocaleTimeString() + ")");
@@ -37,14 +40,54 @@ let updateData = function() {
     });
 }
 
+let switchClusters = function(name: string, current: any) {
+    console.log("Switching cluster " + name + " to " + current);
+    switch (name) {
+        case "c1":
+            return {name: name.toUpperCase(), color: "#66F6FF", current: current, total: 48};
+        case "c2":
+            return {name: name.toUpperCase(), color: "#02B76A", current: current, total: 72};
+        case "c3":
+            return {name: name.toUpperCase(), color: "#FF6666", current: current, total: 12};
+        case "c4":
+            return {name: name.toUpperCase(), color: "#FFE766", current: current, total: 12};
+        case "bocal":
+            return {name: capitalize(name), color: "#A061D1", current: current, total: 6};
+        default:
+            break;
+    }
+}
+
+let updateClusters = function() {
+    console.log("Fetching new data for clusters (at " + new Date().toLocaleTimeString() + ")");
+    fetch('https://prod.middleware.42dashboard.zenekhan.tech/cluster', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        clusters.value = [];
+        console.log(Object.entries(data.data));
+        for (let resp of Object.entries(data.data)) {
+            clusters.value.push(switchClusters(resp[0], resp[1]));
+        }
+        updateList.value++;
+    });
+}
+
 updateData();
+setTimeout(updateClusters, 5000);
 setInterval(updateData, 25000);
+setInterval(updateClusters, 180000);
 
 export default {
     name: "FooterVue",
     data() {
         return {
             trams: trams,
+            clusters: clusters,
             updateList: updateList,
         }
     }

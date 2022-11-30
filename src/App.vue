@@ -3,6 +3,7 @@
   import FooterVue from './components/Footer.vue';
   import CoalitionsVue from './components/Coalitions.vue';
   import EventsVue from './components/Events.vue';
+  import BdeVue from './components/Bde.vue';
   import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
   import 'vue3-carousel/dist/carousel.css';
 </script>
@@ -18,6 +19,9 @@
         </Slide>
         <Slide key="events">
           <EventsVue />
+        </Slide>
+        <Slide key="bde">
+          <BdeVue />
         </Slide>
         <template #addons>
           <navigation />
@@ -37,7 +41,7 @@ export default {
     Slide,
     Pagination,
     Navigation,
-  },
+},
 }
 </script>
 
