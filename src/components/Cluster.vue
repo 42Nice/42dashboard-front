@@ -1,8 +1,8 @@
 <template>
-    <div class="flex bg-dark-background rounded-full">
-        <p class="my-auto mx-2 text-[28px] mr-1 font" :style="{color: color}">{{name}}</p>
-        <div class="mx-2 text-[36px] text-white">
-            <a class="font font-bold">{{current}}</a>
+    <div class="flex items-center justify-center gap-x-2 my-auto font">
+        <p class="text-[28px] font" :style="{color: color}">{{name}}</p>
+        <div class="text-[36px] text-white">
+            <a class="font font-bold">{{current.toString().padStart(2, "0")}}</a>
             <a class="font">/</a>
             <a class="font font-bold">{{total}}</a>
         </div>

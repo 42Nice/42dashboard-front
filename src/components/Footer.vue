@@ -1,11 +1,15 @@
 <template>
-    <div class="grid grid-flow-col justify-center gap-20 mb-8">
-        <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
-    </div>
-    <div class="bg-dark-background grid grid-flow-col justify-center relative gap-32" :key="updateList">
-        <TramVue v-for="(tram, i) in trams" :key="i" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
-        <div class="absolute bottom-0 left-0">
-            <p class="text-white font text-[8px] mx-2 p-4">preview {{version}} | Made with ❤️ by alopez and lvolland</p>
+    <div class="flex justify-center bg-dark-background gap-16">
+        <div class="grid grid-cols-2 justify-center my-auto gap-x-2 gap-y-4">
+            <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
+        </div>
+        <div v-if="(trams.length > 0 && clusters.length > 0)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
+        <div class="grid grid-flow-col justify-center relative gap-8" :key="updateList">
+            <TramVue v-for="(tram, i) in trams" :key="i" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
+        </div>
+        <div class="absolute left-0 bottom-0 p-4">
+            <p class="text-gray-400 font text-[10px] mb-1 text-center">preview {{version}}<br/></p>
+            <p class="text-gray-400 font text-[8px]">Made with ❤️ by alopez and lvolland</p>
         </div>
     </div>
 </template>
