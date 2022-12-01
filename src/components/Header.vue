@@ -2,7 +2,7 @@
     <div class="h-[80px] bg-dark-background flex">
         <!-- 42 Logo -->
         <div class="bg-background z-10">
-            <img src="/assets/42-logo.svg" alt="42 logo" class="w-[80px] h-full mx-4">
+            <img src="/assets/42Nice_Logo.svg" alt="42 logo" class="w-[80px] h-full mx-4">
         </div>
 
         <!-- Annonce text -->

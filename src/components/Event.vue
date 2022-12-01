@@ -7,21 +7,21 @@
         </div>
         <div class="flex flex-col flex-grow relative">
             <div class="grid grid-cols-3 p-1">
-                <p class="font font-bold text-[16px] mx-1 my-auto truncate" :style="{color: color}">
+                <p class="font-bold text-[16px] mx-1 my-auto truncate" :style="{color: color}">
                     {{capitalizeFirstLetter(type)}}
                 </p>
                 <div class="flex gap-0 mx-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} :stroke="color" class="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="font text-[14px] my-auto truncate" :style="{color: color}">{{duration}} hours</p>
+                    <p class="text-[14px] my-auto truncate" :style="{color: color}">{{duration}} hours</p>
                 </div>
                 <div class="flex gap-0 mx-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} :stroke="color" class="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
-                    <p class="font text-[14px] my-auto truncate" :style="{color: color}">{{location}}</p>
+                    <p class="text-[14px] my-auto truncate" :style="{color: color}">{{location}}</p>
                 </div>
             </div>
             <p class="text-[14px] text-left text-white mx-2 line-clamp-2">{{capitalizeFirstLetter(name)}}</p>

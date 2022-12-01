@@ -1,26 +1,51 @@
 <template>
-    <div class="flex items-center">
-        <div class="rounded-full flex h-fit p-1" :style="{backgroundColor: color}">
-            <img src="/assets/tram.svg" alt="icon" class="w-[30px] h-[30px] m-[2px]" />
+    <div class="flex flex-col items-center my-4 gap-2">
+        <div class="rounded-full flex p-1" :style="{backgroundColor: color}">
+            <img :src="'/assets/'+type+'.svg'" alt="icon" class="w-[30px] h-[30px] m-[2px]" />
             <div class="rounded-full bg-white flex items-center ml-1">
                 <p class="text-black font text-[22px] mx-2 ny-1">{{line}}</p>
             </div>
         </div>
-        <div>
-            <p class="text-white font text-[22px] mx-2">{{dir}}</p>
-        </div>
-        <div class="flex items-center" v-if="realtime">
-            <p class="text-[#02B76A] font text-[22px] mr-2">{{peta}}</p>
-            <img src="/assets/rt.gif" alt="real_time" class="w-[15px] h-[30px]" />
-        </div>
-        <div v-else class="flex flex-col items-center">
-            <p class="text-white font-bold font text-[18px] mb-2">{{eta_hour}}</p>
-            <p class="text-white font text-[14px]">{{peta}}</p>
+        <div v-for="dir in directions" class="flex flex-row items-center">
+            <p class="text-white font text-[22px] mx-2">{{dir.name}}</p>
+            <div class="flex items-center" v-if="dir.realtime">
+                <p class="text-[#02B76A] font text-[22px] mr-2">{{dir.eta}}</p>
+                <img src="/assets/rt.gif" alt="real_time" class="w-[15px] h-[30px]" />
+            </div>
+            <p v-else class="text-white font text-[18px]">{{dir.eta_hour}}</p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
+
+export class TramDirection {
+    name: string;
+    eta: string;
+    eta_hour: string;
+    realtime: boolean;
+
+    constructor(name: string, eta: number, eta_hour: string, realtime: boolean) {
+        if (name == 'Aéroport Terminal 2')
+            this.name = 'Aéroport T2';
+        else if (name == 'Saint-Isidore')
+            this.name = 'St-Isidore';
+        else if (name == 'CADAM Centre Administratif')
+            this.name = 'CADAM';
+        else if (name == 'Port Lympia / City Center')
+            this.name = 'Port Lympia';
+        else if (name.includes('STAPS'))
+            this.name = 'STAPS';
+        else if (name == 'Giono / Les Pugets')
+            this.name = 'Giono';
+        else
+            this.name = name;
+        this.eta = eta == 0 ? 'En approche' : eta + ' min';
+        this.eta_hour = eta_hour;
+        this.realtime = realtime;
+    }
+}
+
 export default {
     name: "TramVue",
     props: {
@@ -28,41 +53,22 @@ export default {
             type: String,
             required: true,
         },
-        direction: {
+        type: {
             type: String,
             required: true,
         },
-        eta: {
-            type: Number,
-            required: true,
-        },
-        eta_hour: {
+        stop: {
             type: String,
             required: true,
         },
-        realtime: {
-            type: Boolean,
+        color: {
+            type: String,
+            required: true,
+        },
+        directions: {
+            type: Array<TramDirection>,
             required: true,
         },
     },
-    data() {
-        console.log(this.direction);
-        let dir = this.direction;
-        if (dir == 'Aéroport Terminal 2')
-            dir = 'Aéroport T2';
-        else if (dir == 'Saint-Isidore')
-            dir = 'St-Isidore';
-        else if (dir == 'CADAM Centre Administratif')
-            dir = 'CADAM';
-        else if (dir == 'Port Lympia / City Center')
-            dir = 'Port Lympia';
-        let peta = this.eta == 0 ? 'En approche' : this.eta + ' min';
-        console.log(this.realtime);
-        return {
-            dir: dir,
-            color: this.line == 'L3'?'#009640':'#004F9F',
-            peta: peta,
-        }
-    }
 }
 </script>

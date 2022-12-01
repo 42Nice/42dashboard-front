@@ -1,19 +1,18 @@
-
 <template>
-    <div class="grid grid-flow-col justify-center gap-20 mb-16">
+    <div class="grid grid-flow-col justify-center gap-20 mb-8">
         <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
     </div>
-    <div class="h-[70px] bg-dark-background grid grid-flow-col justify-center relative" :key="updateList">
-        <TramVue class="mx-16" v-for="(tram, i) in trams" :key="i" :color="tram.color" :line="tram.line" :direction="tram.direction" :eta="tram.eta" :eta_hour="tram.eta_hour" :realtime="tram.realtime == 1" />
+    <div class="bg-dark-background grid grid-flow-col justify-center relative gap-32" :key="updateList">
+        <TramVue v-for="(tram, i) in trams" :key="i" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
         <div class="absolute bottom-0 left-0">
-            <p class="text-white font text-[8px] mx-2 p-4">preview {{version}}</p>
+            <p class="text-white font text-[8px] mx-2 p-4">preview {{version}} | Made with ❤️ by alopez and lvolland</p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import {version} from '../../package.json';
-import TramVue from './Tram.vue';
+import TramVue, { TramDirection } from './Tram.vue';
 import Cluster from './Cluster.vue';
 </script>
 
@@ -24,7 +23,7 @@ let trams: Ref<any> = ref([]);
 let clusters: Ref<any> = ref([]);
 let updateList: Ref<number> = ref(0);
 
-let updateData = function() {            
+let updateTrams = function() {            
     console.log("Fetching new data for trams (at " + new Date().toLocaleTimeString() + ")");
     fetch('https://prod.middleware.42dashboard.zenekhan.tech/tram', {
         method: 'GET',
@@ -34,8 +33,24 @@ let updateData = function() {
     })
     .then(response => response.json())
     .then(data => {
-        trams.value = data.data;
-        console.log(trams.value);
+        let newTrams: any = [];
+        for (let tram in data.data)
+        {
+            let directions: TramDirection[] = [];
+            for (let dir in data.data[tram].directions)
+            {
+                let direction = data.data[tram].directions[dir];
+                directions.push(new TramDirection(direction.name, direction.eta, direction.eta_hour, direction.realtime));
+            }
+            newTrams.push({
+                line: data.data[tram].line,
+                type: data.data[tram].type,
+                stop: data.data[tram].stop,
+                color: data.data[tram].color,
+                directions: directions
+            });
+        }
+        trams.value = newTrams;
         updateList.value++;
     });
 }
@@ -77,9 +92,9 @@ let updateClusters = function() {
     });
 }
 
-updateData();
+updateTrams();
 setTimeout(updateClusters, 5000);
-setInterval(updateData, 25000);
+setInterval(updateTrams, 25000);
 setInterval(updateClusters, 180000);
 
 export default {
