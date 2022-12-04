@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center my-4 gap-2">
+    <div class="flex flex-col items-center my-2 gap-2">
         <div class="rounded-full flex p-1" :style="{backgroundColor: color}">
             <img :src="'/assets/'+type+'.svg'" alt="icon" class="w-[30px] h-[30px] m-[2px]" />
             <div class="rounded-full bg-white flex items-center ml-1">
@@ -30,17 +30,17 @@ export class TramDirection {
     realtime: boolean;
 
     constructor(name: string, eta: number, eta_hour: string, realtime: boolean) {
-        if (name == 'Aéroport Terminal 2')
-            this.name = 'Aéroport T2';
+        if (name.includes('Aéroport'))
+            this.name = 'Aéroport';
         else if (name == 'Saint-Isidore')
             this.name = 'St-Isidore';
-        else if (name == 'CADAM Centre Administratif')
+        else if (name.includes('CADAM'))
             this.name = 'CADAM';
-        else if (name == 'Port Lympia / City Center')
+        else if (name.includes('Port Lympia'))
             this.name = 'Port Lympia';
         else if (name.includes('STAPS'))
             this.name = 'STAPS';
-        else if (name == 'Giono / Les Pugets')
+        else if (name.includes('Giono'))
             this.name = 'Giono';
         else
             this.name = name;

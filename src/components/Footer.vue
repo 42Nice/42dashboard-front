@@ -3,9 +3,17 @@
         <div class="grid grid-cols-2 justify-center my-auto gap-x-2 gap-y-4 py-4">
             <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
         </div>
-        <div v-if="(trams.length > 0 && clusters.length > 0)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
-        <div class="grid grid-flow-col justify-center relative gap-8" :key="updateList">
-            <TramVue v-for="(tram, i) in trams" :key="i" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
+        <div v-if="(Object.keys(trams).length > 0 && clusters.length > 0)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
+        <div class="flex flex-row gap-16" :key="updateList"  v-for="stopTrams, stop, i in trams">
+            <div class="grid grid-flow-col justify-center relative gap-8">
+                <div class="flex flex-col">
+                    <p class="font text-gray-400 text-center py-2">{{stop}}</p>
+                    <div class="grid grid-flow-col justify-center relative gap-8">
+                        <TramVue v-for="tram in stopTrams" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
+                    </div>
+                </div>
+            </div>
+            <div v-if="((i??0) < Object.keys(trams).length - 1)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
         </div>
         <div class="absolute left-0 bottom-0 p-4">
             <p class="text-gray-400 font text-[10px] mb-1 text-center">preview {{version}}<br/></p>
@@ -23,7 +31,7 @@ import Cluster from './Cluster.vue';
 <script lang="ts">
 import { capitalize, ref, Ref } from 'vue';
 
-let trams: Ref<any> = ref([]);
+let trams: Ref<any> = ref({});
 let clusters: Ref<any> = ref([]);
 let updateList: Ref<number> = ref(0);
 
@@ -37,7 +45,7 @@ let updateTrams = function() {
     })
     .then(response => response.json())
     .then(data => {
-        let newTrams: any = [];
+        let newTrams: any = {};
         for (let tram in data.data)
         {
             let directions: TramDirection[] = [];
@@ -48,10 +56,13 @@ let updateTrams = function() {
                     continue;
                 directions.push(new TramDirection(direction.name, direction.eta, direction.eta_hour, direction.realtime));
             }
-            newTrams.push({
+            let stop = data.data[tram].stop;
+            if (!(stop in newTrams))
+                newTrams[stop] = [];
+            newTrams[stop].push({
                 line: data.data[tram].line,
                 type: data.data[tram].type,
-                stop: data.data[tram].stop,
+                stop: stop,
                 color: data.data[tram].color,
                 directions: directions
             });
