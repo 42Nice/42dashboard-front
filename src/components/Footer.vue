@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center bg-dark-background gap-16">
-        <div class="grid grid-cols-2 justify-center my-auto gap-x-2 gap-y-4">
+        <div class="grid grid-cols-2 justify-center my-auto gap-x-2 gap-y-4 py-4">
             <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
         </div>
         <div v-if="(trams.length > 0 && clusters.length > 0)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
@@ -44,6 +44,8 @@ let updateTrams = function() {
             for (let dir in data.data[tram].directions)
             {
                 let direction = data.data[tram].directions[dir];
+                if (direction.name == null)
+                    continue;
                 directions.push(new TramDirection(direction.name, direction.eta, direction.eta_hour, direction.realtime));
             }
             newTrams.push({

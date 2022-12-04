@@ -12,7 +12,11 @@
                 <p class="text-[#02B76A] font text-[22px] mr-2">{{dir.eta}}</p>
                 <img src="/assets/rt.gif" alt="real_time" class="w-[15px] h-[30px]" />
             </div>
-            <p v-else class="text-white font text-[18px]">{{dir.eta_hour}}</p>
+            <p v-else class="text-white font text-[18px] py-2">{{dir.eta_hour}}</p>
+        </div>
+        <div v-if="(directions.length == 0)">
+            <p class="text-white font text-[22px] mx-2 mb-1 pt-4 text-center">Hors Service</p>
+            <p class="text-white font text-[22px] mx-2 mt-1 pb-4 text-center">Commercial</p>
         </div>
     </div>
 </template>
