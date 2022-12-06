@@ -15,6 +15,7 @@ import CoalitionVue from './Coalition.vue';
 
 <script lang="tsx">
 import { Ref, ref } from 'vue';
+import Log from './Log.vue';
 
 let updateData = function () {
     let today = new Date();
@@ -28,7 +29,7 @@ let updateData = function () {
     else
         enddate.value = "END IN " + Math.floor(diff / (1000 * 60 * 60)) + " HOURS";
 
-    console.log("Fetching coalitions");
+        Log.methods?.debug("Fetching coalitions");
     fetch("https://prod.middleware.42dashboard.zenekhan.tech/coalitions", {
         method: "GET",
         headers: {
@@ -36,7 +37,7 @@ let updateData = function () {
         },
     })
         .then((response) => {
-            console.log("response from coalitions:", response);
+            Log.methods?.debug("response from coalitions:", response);
             return (response.json());
         })
         .then((data) => {

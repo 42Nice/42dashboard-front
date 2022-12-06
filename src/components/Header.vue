@@ -19,6 +19,7 @@
 
 <script lang="ts">
 import { ref } from 'vue';
+import Log from './Log.vue';
 
 const hour = ref('');
 const msg = ref('');
@@ -32,7 +33,7 @@ let updateData = function () {
     if ((today.getTime() - lastFetch.getTime()) <= 60000)
         return;
 
-    console.log("Fetching new data");
+    Log.methods?.debug("Fetching new data for staff message");
     lastFetch = today;
     fetch('https://prod.middleware.42dashboard.zenekhan.tech/message', {
         method: 'GET',

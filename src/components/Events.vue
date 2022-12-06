@@ -33,11 +33,12 @@ import EventVue from "./Event.vue";
 
 <script lang="ts">
 import { Ref, ref } from 'vue';
+import Log from './Log.vue';
 
 let events: Ref<any> = ref([[], []]);
 
 let updateData = function () {
-    console.log("Fetching new data for events (at " + new Date().toLocaleTimeString() + ")");
+    Log.methods?.debug("Fetching new data for events");
     fetch("https://prod.middleware.42dashboard.zenekhan.tech/event", {
         method: "GET",
         headers: {

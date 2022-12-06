@@ -30,13 +30,14 @@ import Cluster from './Cluster.vue';
 
 <script lang="ts">
 import { capitalize, ref, Ref } from 'vue';
+import Log from './Log.vue';
 
 let trams: Ref<any> = ref({});
 let clusters: Ref<any> = ref([]);
 let updateList: Ref<number> = ref(0);
 
 let updateTrams = function() {            
-    console.log("Fetching new data for trams (at " + new Date().toLocaleTimeString() + ")");
+    Log.methods?.debug("Fetching new data for trams");
     fetch('https://prod.middleware.42dashboard.zenekhan.tech/tram', {
         method: 'GET',
         headers: {
@@ -73,7 +74,6 @@ let updateTrams = function() {
 }
 
 let switchClusters = function(name: string, current: any) {
-    console.log("Switching cluster " + name + " to " + current);
     switch (name) {
         case "c1":
             return {name: name.toUpperCase(), color: "#66F6FF", current: current, total: 48};
@@ -91,7 +91,7 @@ let switchClusters = function(name: string, current: any) {
 }
 
 let updateClusters = function() {
-    console.log("Fetching new data for clusters (at " + new Date().toLocaleTimeString() + ")");
+    Log.methods?.debug("Fetching new data for clusters");
     fetch('https://prod.middleware.42dashboard.zenekhan.tech/cluster', {
         method: 'GET',
         headers: {
@@ -101,7 +101,6 @@ let updateClusters = function() {
     .then(response => response.json())
     .then(data => {
         clusters.value = [];
-        console.log(Object.entries(data.data));
         for (let resp of Object.entries(data.data)) {
             clusters.value.push(switchClusters(resp[0], resp[1]));
         }
