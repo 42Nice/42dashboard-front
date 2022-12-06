@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full">
         <p class="text-white text-[35px] text-center font-bold font mb-8">BDE ANNOUNCEMENTS</p>
-        <img v-if="imgUrl != ''" :src="imgUrl" class="mx-auto max-h-[550px]">
+        <img v-if="imgUrl != ''" :src="imgUrl" class="mx-auto max-h-[65vh]">
     </div>
 </template>
 

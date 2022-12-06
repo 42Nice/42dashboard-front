@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-2">
+    <div class="grid grid-cols-2 scale-[130%]">
         <div class="flex flex-col h-full mr-8">
             <p class="text-white font font-thin text-[30px] mb-4">UPCOMING EVENTS</p>
             <div class="bg-dark-background h-full flex flex-col gap-3 p-2 w-[500px] rounded-xl">

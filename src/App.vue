@@ -11,7 +11,7 @@
 <template>
   <div class="flex flex-col h-screen bg-cover bg-image">
     <HeaderVue />
-    <div id="content" class="flex-grow">
+    <div id="content" class="flex flex-grow flex-col">
       <div class="border-2 my-6 rounded-xl mx-auto border-light-background w-[80px]" />
       <Carousel ref="myCarousel" :autoplay="30000" :wrapAround="true" :snapAlign="'center'">
         <Slide key="coals">          
