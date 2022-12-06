@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col h-full">
         <p class="text-white text-[35px] text-center font-bold font mb-8">{{ enddate }}</p>
-        <div class="h-full flex-grow grid gap-8 grid-flow-col mx-auto scale-[130%]">
+        <div class="h-full flex-grow grid gap-8 grid-flow-col mx-auto scale-[150%]">
             <CoalitionVue v-for="coalition in coalitions" :key="coalition.name" :name="coalition.name"
                 :score="coalition.score" :bg="coalition.bg" :color="coalition.color" :medal="coalition.medal"
                 :logo="coalition.logo" />
