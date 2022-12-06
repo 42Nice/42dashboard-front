@@ -1,15 +1,15 @@
 <template>
-    <div class="flex justify-center bg-dark-background gap-16">
+    <div class="flex justify-center bg-dark-background gap-16" :key="updateList">
         <div class="grid grid-cols-2 justify-center my-auto gap-x-2 gap-y-4 py-4">
-            <Cluster v-for="(cluster, i) in clusters" :key="i" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
+            <Cluster v-for="(cluster, i) in clusters" :key="cluster.name" :name="cluster.name" :color="cluster.color" :current="cluster.current" :total="cluster.total" />
         </div>
         <div v-if="(Object.keys(trams).length > 0 && clusters.length > 0)" class="w-1 h-auto my-6 bg-background rounded-full"></div>
-        <div class="flex flex-row gap-16" :key="updateList"  v-for="stopTrams, stop, i in trams">
+        <div class="flex flex-row gap-16" v-for="stopTrams, stop, i in trams">
             <div class="grid grid-flow-col justify-center relative gap-8">
                 <div class="flex flex-col">
                     <p class="font text-gray-400 text-center py-2">{{stop}}</p>
                     <div class="grid grid-flow-col justify-center relative gap-8">
-                        <TramVue v-for="tram in stopTrams" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
+                        <TramVue :key="tram.line" v-for="tram in stopTrams" :line="tram.line" :type="tram.type" :stop="tram.stop" :color="tram.color" :directions="tram.directions" />
                     </div>
                 </div>
             </div>
