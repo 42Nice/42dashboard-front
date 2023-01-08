@@ -1,22 +1,22 @@
 <template>
-    <div class="flex flex-col items-center my-2 gap-2">
-        <div class="rounded-full flex p-1" :style="{backgroundColor: color}">
-            <img :src="'/assets/'+type+'.svg'" alt="icon" class="w-[30px] h-[30px] m-[2px]" />
+    <div class="flex flex-col items-center my-2 gap-1 tv:gap-2">
+        <div class="rounded-full flex p-1 mb-1 tv:mb-0" :style="{backgroundColor: color}">
+            <img :src="'/assets/'+type+'.svg'" alt="icon" class="w-[18px] h-[18px] tv:w-[30px] tv:h-[30px] m-[2px]" />
             <div class="rounded-full bg-white flex items-center ml-1">
-                <p class="text-black font text-[22px] mx-2 ny-1">{{line}}</p>
+                <p class="text-black font text-[12px] tv:text-[22px] mx-2 ny-1">{{line}}</p>
             </div>
         </div>
         <div v-for="dir in directions" class="flex flex-row items-center">
-            <p class="text-white font text-[22px] mx-2">{{dir.name}}</p>
+            <p class="text-white font text-[12px] tv:text-[22px] mx-2">{{dir.name}}</p>
             <div class="flex items-center" v-if="dir.realtime">
-                <p class="text-[#02B76A] font text-[22px] mr-2">{{dir.eta}}</p>
-                <img src="/assets/rt.gif" alt="real_time" class="w-[15px] h-[30px]" />
+                <p class="text-[#02B76A] font text-[12px] tv:text-[22px] mr-2">{{dir.eta}}</p>
+                <img src="/assets/rt.gif" alt="real_time" class="w-[8px] h-[16px] tv:w-[15px] tv:h-[30px]" />
             </div>
-            <p v-else class="text-white font text-[18px] py-2">{{dir.eta_hour}}</p>
+            <p v-else class="text-white font text-[10px] tv:text-[18px] py-1 tv:py-2">{{dir.eta_hour}}</p>
         </div>
         <div v-if="(directions.length == 0)">
-            <p class="text-white font text-[22px] mx-2 mb-1 pt-4 text-center">Hors Service</p>
-            <p class="text-white font text-[22px] mx-2 mt-1 pb-4 text-center">Commercial</p>
+            <p class="text-white font text-[12px] tv:text-[22px] mx-2 mb-1 pt-1 tv:pt-4 text-center">Hors Service</p>
+            <p class="text-white font text-[12px] tv:text-[22px] mx-2 mt-1 pt-1 tv:pb-4 text-center">Commercial</p>
         </div>
     </div>
 </template>
