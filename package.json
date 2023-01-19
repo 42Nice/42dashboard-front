@@ -1,7 +1,7 @@
 {
   "name": "42_dashboard",
   "private": true,
-  "version": "0.4.5",
+  "version": "0.4.5 2-years edition",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "vue": "^3.2.41",
-    "vue3-carousel": "^0.2.5"
+    "vue3-carousel": "^0.2.9"
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.2",
