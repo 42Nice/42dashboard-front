@@ -7,6 +7,13 @@
             <img src="/assets/trophy.svg" alt="trophy" class="w-[30px] h-auto">
             <p class="text-white text-[35px] font">{{score}}</p>
         </div>
+        <div class="flex flex-col justify-center items-center">
+            <div class="w-[80px] h-[80px] relative">
+                <img :src="top_image" alt="top_image" class="w-[80px] h-[80px] object-cover mx-auto rounded-full border-4" :style="{borderColor: color }">
+                <span class="absolute -right-2 -top-2 rotate-45 text-2xl">👑</span>
+            </div>
+            <p class="text-white text-[22px] text-center font-bold font mt-2 mb-8">{{top_login}}</p>
+        </div>
     </div>
 </template>
 
@@ -35,6 +42,14 @@ export default {
             required: true,
         },
         logo: {
+            type: String,
+            required: true,
+        },
+        top_login: {
+            type: String,
+            required: true,
+        },
+        top_image: {
             type: String,
             required: true,
         },
