@@ -88,12 +88,19 @@ export default {
 </script>
 
 <style scoped>
+
 .bg-image {
   background-image: url('/assets/bg.png');
 }
 </style>
 
 <style>
+
+body {
+  cursor: none;
+  user-select: none;
+}
+
 .font {
   font-family: 'Inter', sans-serif;
   line-height: 80%;

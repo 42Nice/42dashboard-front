@@ -11,7 +11,7 @@
       <div v-if="stories.length > 0" class="relative rounded-lg" style="width: 350px; height: 580px">
         <div class="bg-cover bg-no-repeat h-full rounded-lg">
           <div class="h-full">
-            <img v-if="stories[key].type == 'image'" :src="stories[key].url" class="h-full w-full rounded-lg" />
+            <img v-if="stories[key].type == 'image'" :src="stories[key].url" class="h-full w-full rounded-lg object-contain" />
             <video v-else-if="stories[key].type == 'video'" :src="stories[key].url" class="h-full w-full rounded-lg" autoplay muted />
           </div>
           <div class="w-full pt-4 absolute top-0">
