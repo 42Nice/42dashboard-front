@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import CoalitionUser from "./CoalitionUser.vue";
+</script>
+
 <template>
     <div class="h-fit my-auto shadow-xl rounded-lg w-[360px] bg-cover" :style="{backgroundImage: 'linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url('+bg+')'}">
         <img :src="'/assets/' + medal" :alt="medal" class="w-[60px] h-auto mx-auto my-5">
@@ -7,12 +11,10 @@
             <img src="/assets/trophy.svg" alt="trophy" class="w-[30px] h-auto">
             <p class="text-white text-[35px] font">{{score}}</p>
         </div>
-        <div class="flex flex-col justify-center items-center">
-            <div class="w-[80px] h-[80px] relative">
-                <img :src="top_image" alt="top_image" class="w-[80px] h-[80px] object-cover mx-auto rounded-full border-4" :style="{borderColor: color }">
-                <span class="absolute -right-2 -top-2 rotate-45 text-2xl">👑</span>
-            </div>
-            <p class="text-white text-[22px] text-center font-bold font mt-2 mb-8">{{top_login}}</p>
+        <div class="flex flex-row justify-center items-center gap-8">
+            <CoalitionUser :login="(tops[1] as any).login" :image="(tops[1] as any).image" :index="1" :color="color"/>
+            <CoalitionUser :login="(tops[0] as any).login" :image="(tops[0] as any).image" :index="0" :color="color"/>
+            <CoalitionUser :login="(tops[2] as any).login" :image="(tops[2] as any).image" :index="2" :color="color"/>
         </div>
     </div>
 </template>
@@ -45,12 +47,8 @@ export default {
             type: String,
             required: true,
         },
-        top_login: {
-            type: String,
-            required: true,
-        },
-        top_image: {
-            type: String,
+        tops: {
+            type: Array,
             required: true,
         },
     }

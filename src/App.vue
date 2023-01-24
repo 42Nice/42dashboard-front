@@ -35,6 +35,13 @@
     </div>
     <FooterVue />
   </div>
+  <!-- Pause button -->
+  <button class="m-4 w-4 h-4 absolute top-12 left-0 cursor-pointer text-white" @click="togglePause">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+      <path v-if="!paused" id="pause-path" strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+      <path v-else id="play-path" strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+    </svg>
+  </button>
 </template>
 
 <script lang="ts">
@@ -51,6 +58,7 @@ export default {
   data() {
     return {
       currentTime: 0,
+      paused: false,
     };
   },
   methods: {
@@ -71,7 +79,8 @@ export default {
       }
       setTimeout(() => {
         // go to the next slide
-        this.currentTime += 1;
+        if (!this.paused)
+          this.currentTime += 1;
         this.updateSlider();
       }, 1000);
     },
@@ -82,6 +91,15 @@ export default {
     handleInit() {
       console.log("init");
       this.updateSlider();
+    },
+    togglePause() {
+      let carousel = this.$refs.myCarousel as any;
+      if (carousel == null || carousel.data == null) return;
+      if (this.paused)
+        this.paused = false;
+      else
+        this.paused = true;
+      console.log(this.paused);
     },
   },
 }

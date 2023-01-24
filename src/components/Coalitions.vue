@@ -4,7 +4,7 @@
         <div class="h-full flex-grow grid gap-8 grid-flow-col mx-auto tv:scale-[150%]">
             <CoalitionVue v-for="coalition in coalitions" :key="coalition.name" :name="coalition.name"
                 :score="coalition.score" :bg="coalition.bg" :color="coalition.color" :medal="coalition.medal"
-                :logo="coalition.logo" :top_login="coalition.top_login" :top_image="coalition.top_image" />
+                :logo="coalition.logo" :tops="coalition.tops" />
         </div>
     </div>
 </template>
@@ -52,8 +52,7 @@ let updateData = function () {
                     color: coalition.color,
                     medal: medal,
                     logo: coalition.logo,
-                    top_login: coalition.top_login,
-                    top_image: coalition.top_image,
+                    tops: coalition.tops,
                 };
             });
             if (size == 3)
